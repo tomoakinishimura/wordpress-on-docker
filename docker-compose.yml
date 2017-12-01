@@ -1,28 +1,15 @@
 version: '2'
 services:
-  db:
-    image: mysql:5.7
-    # mem_limit: 268435456
-    ports:
-      - "3306:3306"
-    restart: always
-    environment:
-      # MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-
   wordpress:
-    image: wordpress:latest
-    # mem_limit: 268435456
-    depends_on:
-      - db
+    image: wordpress
+    mem_limit: 268435456
     ports:
-      - "8000:80"
-    restart: always
+      - "80:80"
+    links:
+      - mysql
+  mysql:
+    image: mysql
+    mem_limit: 268435456
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: password
+
